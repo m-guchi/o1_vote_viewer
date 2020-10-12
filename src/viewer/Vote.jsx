@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        margin: '1rem auto 6rem',
+        margin: '1rem auto 7rem',
         maxWidth: '900px',
         width: '90vw',
     },
@@ -51,7 +51,7 @@ function Vote (props) {
     }
 
     const voteItemData = Object.values(props.group).filter(function(item, index) {
-        if (item.id == voteItem) return true;
+        if (item.id == voteItem) return true
     })
 
     return(
@@ -133,6 +133,12 @@ function Vote (props) {
                                     投票
                                 </Button>
                             </div>
+                            <Typography
+                                variant="body2"
+                            // display='inline'
+                            >
+                                ※投票内容は変更できません。
+                            </Typography>
                         </div>
                     </div>
                 </div>

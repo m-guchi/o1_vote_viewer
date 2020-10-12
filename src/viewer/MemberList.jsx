@@ -6,7 +6,7 @@ import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        margin: '0.3rem 0',
+        marginTop: '0.3rem',
     },
 }));
 
@@ -20,7 +20,7 @@ function MemberList(props) {
                         no={val.no}
                         name={val.name}
                         detail={val.detail}
-                        final={val.final}
+                        final={Boolean(val.final)}
                     />
                 ))
             }

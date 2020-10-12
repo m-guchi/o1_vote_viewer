@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardContent, CardActionArea, Grid, Typography, IconButton } from '@material-ui/core';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import HowToVoteIcon from '@material-ui/icons/HowToVote';
+import { Card, CardContent, CardActionArea, Grid, Typography } from '@material-ui/core';
+// import FavoriteIcon from '@material-ui/icons/Favorite';
+// import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 

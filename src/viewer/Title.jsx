@@ -38,15 +38,30 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Title () {
+const round = {
+    first: '予選',
+    final: '決勝',
+}
+
+function Title (props) {
     const classes = useStyles();
+
+    const groupData = Object.values(props.group).filter(function (item, index) {
+        if (item.id == props.setting.group_id) return true
+    })
+
     return(
         <React.Fragment>
             <div className={classes.title}>
-                <span className={classes.round}>予選</span>
+                <span className={classes.round}>{round[props.setting.round]}</span>
                 <div className={classes.entryName}>
-                    <span className={classes.entry}><span className={classes.entrySub}>No.</span>8</span>
-                    <span className={classes.name}>限界集落</span>
+                    {Boolean(props.setting.vote) ? "投票受付中！" :
+                        groupData.length>0 &&
+                        [
+                            <span className={classes.entry}><span className={classes.entrySub}>No.</span>{groupData[0].no}</span>,
+                            <span className={classes.name}>{groupData[0].name}</span>
+                        ]
+                    }
                 </div>
             </div>
 

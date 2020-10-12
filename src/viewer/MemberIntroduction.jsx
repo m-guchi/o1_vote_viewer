@@ -4,14 +4,6 @@ import { Card, CardContent, CardMedia, Typography, Grid } from '@material-ui/cor
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        // display: 'flex',
-        // margin: '0.3rem 0',
-        // height: 140,
-    },
-    // cover: {
-    //     width: 100,
-    // },
     final: {
         marginLeft: '0.8rem',
         fontWeight: 'bold',
@@ -21,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 function MemberIntroduction (props) {
     const classes = useStyles();
     return(
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} key={props.id}>
             <Card className={classes.root}>
                 <CardContent>
                     <Typography variant="subtitle1" color="textSecondary">

@@ -5,7 +5,7 @@ import { CookiesProvider, useCookies  } from 'react-cookie';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from "@material-ui/styles";
 import './App.css';
-import Main from './viewer/Main'
+import User from './viewer/User';
 
 const theme = createMuiTheme({
   palette: {
@@ -23,7 +23,7 @@ function App() {
     <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
       <CookiesProvider>
         <ThemeProvider theme={theme}>
-            <Main />
+            <User />
         </ThemeProvider>
       </CookiesProvider>
     </BrowserRouter>

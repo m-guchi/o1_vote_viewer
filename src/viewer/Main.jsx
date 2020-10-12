@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { useCookies } from 'react-cookie';
-
-import { Button } from '@material-ui/core'
 
 import axios from 'axios';
 
@@ -33,78 +30,27 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const group = {
-    0: {
-        id: 0,
-        no: 1,
-        name: "神企画",
-        detail: "aaaa",
-    },
-    1: {
-        id: 1,
-        no: 2,
-        name: "フラミンゴ",
-        detail: "bbbb",
-    },
-    2: {
-        id: 2,
-        no: 3,
-        name: "わびのカルパス",
-        detail: "cccc",
-    },
-    3: {
-        id: 3,
-        no: 4,
-        name: "WADA",
-        detail: "dddd",
-        final: true,
-    },
-    4: {
-        id: 4,
-        no: 5,
-        name: "リサイクルズ",
-        detail: "eeee",
-        final: true,
-
-    },
-    5: {
-        id: 5,
-        no: 6,
-        name: "限界集落",
-        detail: "ffff",
-        final: true,
-
-    },
-    // 6: {
-    //     id: 6,
-    //     no: 7,
-    //     name: "和牛",
-    //     detail: "昨年度優勝者！！",
-    // },
-}
-
-function Main() {
+function Main(props) {
     const classes = useStyles();
     const [votePage, setVotePage] = React.useState(false)
-    const [userId, setUserId] = React.useState('')
-    const [cookies, setCookie] = useCookies(['user'])
+    const [group, setGroup] = React.useState([])
+    const [loaded, setLoaded] = React.useState(false)
 
     const handleVotePage = (bool) => {
         setVotePage(bool)
     }
 
     useEffect(() => {
-        if (!cookies.user_id) fetchUserId()
+        fetchGroupData()
     }, []);
 
-    const fetchUserId = async () => {
-        try{
-            const response = await axios.get('https://tyuujitu.xsrv.jp/test/finale/api/get_user_id.php')
-            const data = response.data.id
-            setUserId(data)
-            setCookie('user_id', data, { path: '/' })
-            // console.log(data)
-        }catch(error){
+    const fetchGroupData = async () => {
+        try {
+            const response = await axios.get(process.env.REACT_APP_API_URL + 'get_group_data.php')
+            const data = response.data.data
+            setGroup(data)
+            setLoaded(true)
+        } catch (error) {
             console.error(error)
         }
     }
@@ -118,10 +64,15 @@ function Main() {
             }
             <div className={classes.root}>
                 <Header />
-                <Video />
-                <Title />
-                <Tickets openVotePage={handleVotePage} />
-                <PlanIntroduction running={true} />
+                {
+                    (Boolean(props.setting.running) && loaded) &&
+                    [
+                        <Video />,
+                        <Title setting={props.setting} group={group}/>,
+                        <Tickets setting={props.setting} openVotePage={handleVotePage} />
+                    ]
+                }
+                <PlanIntroduction running={Boolean(props.setting.running)} />
                 <MainTab group={group}/>
             </div>
         </React.Fragment>
