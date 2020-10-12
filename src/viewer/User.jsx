@@ -10,19 +10,39 @@ function User () {
     const [cookies, setCookie] = useCookies(['user'])
     const [setting, setSetting] = useState([])
     const [loaded, setLoaded] = useState(false)
+    const [ticketNum, setTicketNum] = useState(0)
 
     useEffect(() => {
-        fetchStatus()
-        if (!cookies.user_id) fetchUserId()
+        if (!cookies.user_id || cookies.user_id===undefined) fetchUserId()
+        checkTicketAlready()
+        loopFetchState(10000)
     }, []);
 
-    const fetchStatus = async () => {
-        try {
-            const response = await axios.get(process.env.REACT_APP_API_URL + 'get_status.php')
-            setSetting(response.data.setting)
-            setLoaded(true)
-        } catch (error) {
-            console.error(error)
+    function sleep(time) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve();
+            }, time);
+        });
+    }
+
+    const loopFetchState = async (delay) => {
+        let breakFg = false
+        while(true){
+            await axios.get(process.env.REACT_APP_API_URL + 'get_status.php')
+            // eslint-disable-next-line no-loop-func
+            .then(function (response){
+                setSetting(response.data.setting)
+                setLoaded(true)
+                breakFg = !Boolean(response.data.setting.running)
+            })
+            .catch(function(error){
+                console.error(error)
+            })
+            if (breakFg) {
+                return Promise.resolve(1);
+            }
+            await sleep(delay);
         }
     }
 
@@ -36,9 +56,23 @@ function User () {
         }
     }
 
+    const checkTicketAlready = () => {
+        axios.post(process.env.REACT_APP_API_URL + 'get_ticket.php', {
+            user_id: cookies.user_id,
+        })
+            .then(function (response) {
+                if (response.data.ok) {
+                    setTicketNum(response.data.count)
+                }
+            })
+            .catch(function (error) {
+                console.error(error)
+            })
+    }
+
     return(
         <React.Fragment>
-            { loaded && <Main setting={setting} /> }
+            { loaded && <Main setting={setting} ticketNum={ticketNum} /> }
         </React.Fragment>
     )
 }

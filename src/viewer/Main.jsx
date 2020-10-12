@@ -69,7 +69,7 @@ function Main(props) {
                     [
                         <Video />,
                         <Title setting={props.setting} group={group}/>,
-                        <Tickets setting={props.setting} openVotePage={handleVotePage} />
+                        <Tickets setting={props.setting} openVotePage={handleVotePage} ticketNum={props.ticketNum} />
                     ]
                 }
                 <PlanIntroduction running={Boolean(props.setting.running)} />
