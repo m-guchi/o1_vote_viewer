@@ -1,4 +1,6 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { CookiesProvider, useCookies  } from 'react-cookie';
 // import logo from './logo.svg';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from "@material-ui/styles";
@@ -16,11 +18,15 @@ const theme = createMuiTheme({
   }
 });
 
-function App() {
+function App() {  
   return (
-    <ThemeProvider theme={theme}>
-      <Main />
-    </ThemeProvider>
+    <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
+      <CookiesProvider>
+        <ThemeProvider theme={theme}>
+            <Main />
+        </ThemeProvider>
+      </CookiesProvider>
+    </BrowserRouter>
   );
 }
 

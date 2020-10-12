@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import { useCookies } from 'react-cookie';
 
 import { Button } from '@material-ui/core'
+
+import axios from 'axios';
 
 import Header from './Header'
 import Video from './Video'
@@ -83,9 +86,27 @@ const group = {
 function Main() {
     const classes = useStyles();
     const [votePage, setVotePage] = React.useState(false)
+    const [userId, setUserId] = React.useState('')
+    const [cookies, setCookie] = useCookies(['user'])
 
     const handleVotePage = (bool) => {
         setVotePage(bool)
+    }
+
+    useEffect(() => {
+        if (!cookies.user_id) fetchUserId()
+    }, []);
+
+    const fetchUserId = async () => {
+        try{
+            const response = await axios.get('https://tyuujitu.xsrv.jp/test/finale/api/get_user_id.php')
+            const data = response.data.id
+            setUserId(data)
+            setCookie('user_id', data, { path: '/' })
+            // console.log(data)
+        }catch(error){
+            console.error(error)
+        }
     }
 
     return(
