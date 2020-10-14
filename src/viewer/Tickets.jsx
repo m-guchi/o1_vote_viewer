@@ -39,6 +39,7 @@ const buttonList = {
     alreadyTicket: {
         color: "secondary",
         icon: <ConfirmationNumberIcon />,
+        disable: true,
         text: "チケット獲得済",
     },
     availableVote: {
@@ -62,6 +63,7 @@ const buttonList = {
     alreadyVote: {
         color: "primary",
         icon: <HowToVoteIcon />,
+        disable: true,
         text: "投票ありがとうございます",
     },
 }
