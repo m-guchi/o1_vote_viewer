@@ -71,7 +71,7 @@ const buttonList = {
 
 function Tickets (props) {
     const classes = useStyles();
-    const [cookies, setCookie] = useCookies(['user'])
+    const [cookies] = useCookies(['user'])
 
     const [ticketNum, setTicketNum] = useState(props.ticketNum)
 
@@ -123,12 +123,15 @@ function Tickets (props) {
         })
     }
 
+    const setting = props.setting
+
+
     const checkTicketAlready = () => {
         axios.post(process.env.REACT_APP_API_URL + 'get_ticket.php', {
             user_id: cookies.user_id,
         })
             .then(function (response) {
-                if (response.data.ok && response.data.already) {
+                if (response.data.ok && response.data.already && !setting.vote) {
                     setButton('alreadyTicket')
                 }
             })
@@ -137,7 +140,6 @@ function Tickets (props) {
             })
     }
     
-    const setting = props.setting
     useEffect(() => {
         // console.log(props.setting)
         checkTicketAlready()
