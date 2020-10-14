@@ -8,7 +8,7 @@ import Video from './Video'
 import Title from './Title'
 import PlanIntroduction from './PlanIntroduction'
 import MainTab from './MainTab'
-import Vote from './Vote'
+import Vote from './Vote/Vote'
 import Tickets from './Tickets';
 
 
