@@ -111,7 +111,8 @@ function Tickets (props) {
                 setButton('alreadyTicket')
                 setTicketNum(response.data.count)
             }else{
-                if (response.data.error=='already_vote'){
+                console.error(response.data.error)
+                if (response.data.error==='already_vote'){
                     setButton('alreadyTicket')
                     setTicketNum(response.data.count)
                 }

@@ -6,6 +6,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         margin: '0.3rem 0',
     },
+    orderList: {
+        paddingLeft: 25,
+    }
 }));
 
 function HowToVote () {
@@ -17,7 +20,7 @@ function HowToVote () {
                     投票方法
                 </Typography>
                 <Typography>
-                    <ol>
+                    <ol className={classes.orderList}>
                         <li>投票チケットをゲット！
                             <br/>※「投票チケット」は漫才発表中にゲットできます
                         </li>

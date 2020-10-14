@@ -53,7 +53,6 @@ function User () {
             const data = response.data.id
             const cookieExpiration = '2020-11-22 23:59:59' //cookie有効期限
             const cookieDate = new Date(cookieExpiration)
-            
             setCookie('user_id', data, { expires: cookieDate, path: '/' })
             // setCookie('user_id', data, {  })
         } catch (error) {
@@ -68,6 +67,9 @@ function User () {
             .then(function (response) {
                 if (response.data.ok) {
                     setTicketNum(response.data.count)
+                }else{
+                    console.error(response.data.error)
+                    if(response.data.error==='not_user_id') fetchUserId()
                 }
             })
             .catch(function (error) {
