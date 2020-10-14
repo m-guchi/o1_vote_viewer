@@ -50,7 +50,11 @@ function User () {
         try {
             const response = await axios.get(process.env.REACT_APP_API_URL + 'get_user_id.php')
             const data = response.data.id
-            setCookie('user_id', data, { path: '/' })
+            const cookieExpiration = '2020-11-22 23:59:59'
+            const cookieDate = new Date(cookieExpiration)
+            
+            setCookie('user_id', data, { expires: cookieDate, path: '/' })
+            // setCookie('user_id', data, {  })
         } catch (error) {
             console.error(error)
         }
