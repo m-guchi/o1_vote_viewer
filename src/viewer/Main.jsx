@@ -35,6 +35,7 @@ function Main(props) {
     const [votePage, setVotePage] = React.useState(false)
     const [group, setGroup] = React.useState([])
     const [loaded, setLoaded] = React.useState(false)
+    const [vote, setVote] = React.useState(false)
 
     const handleVotePage = (bool) => {
         setVotePage(bool)
@@ -55,11 +56,20 @@ function Main(props) {
         }
     }
 
+    const submitVote = () => {
+        // console.log('true')
+        setVote(true)
+    }
+
     return(
         <React.Fragment>
             {votePage &&
                 <div className={classes.wrapper}>
-                    <Vote closeVotePage={handleVotePage} group={group}/>
+                    <Vote setting={props.setting}
+                        closeVotePage={handleVotePage}
+                        group={group}
+                        submitVote={submitVote}
+                    />
                 </div>
             }
             <div className={classes.root}>
@@ -69,7 +79,12 @@ function Main(props) {
                     [
                         <Video />,
                         <Title setting={props.setting} group={group}/>,
-                        <Tickets setting={props.setting} openVotePage={handleVotePage} ticketNum={props.ticketNum} />
+                        <Tickets
+                            setting={props.setting}
+                            openVotePage={handleVotePage}
+                            ticketNum={props.ticketNum}
+                            vote={vote}
+                        />
                     ]
                 }
                 <PlanIntroduction running={Boolean(props.setting.running)} />

@@ -72,6 +72,7 @@ const buttonList = {
 function Tickets (props) {
     const classes = useStyles();
     const [cookies] = useCookies(['user'])
+    const [buttonLoaded, setButtonLoaded] = useState(false)
 
     const [ticketNum, setTicketNum] = useState(props.ticketNum)
     // const [ticketNum, setTicketNum] = useState(3)
@@ -132,21 +133,39 @@ function Tickets (props) {
         axios.post(process.env.REACT_APP_API_URL + 'get_ticket.php', {
             user_id: cookies.user_id,
         })
-            .then(function (response) {
-                if (response.data.ok && response.data.already && !setting.vote) {
-                    setButton('alreadyTicket')
-                }
-            })
-            .catch(function (error) {
-                console.error(error)
-            })
+        .then(function (response) {
+            if (response.data.ok && response.data.already && !setting.vote) {
+                setButton('alreadyTicket')
+            }
+            if (setting.vote) setButtonLoaded(true)
+
+        })
+        .catch(function (error) {
+            console.error(error)
+        })
+    }
+
+    const checkVoteAlready = () => {
+        axios.post(process.env.REACT_APP_API_URL + 'get_vote.php', {
+            user_id: cookies.user_id,
+        })
+        .then(function (response) {
+            if (response.data.ok && response.data.already && setting.vote) {
+                setButton('alreadyVote')
+            }
+            if (!setting.vote) setButtonLoaded(true)
+        })
+        .catch(function (error) {
+            console.error(error)
+        })
     }
     
     useEffect(() => {
         // console.log(props.setting)
         checkTicketAlready()
+        checkVoteAlready()
         setButton(buttonInitialStatus)
-    }, [setting.running, setting.round, setting.vote, setting.vote_accept, setting.ticket_accept, setting.group_id])
+    }, [setting.running, setting.round, setting.vote, setting.vote_accept, setting.ticket_accept, setting.group_id, props.vote])
 
     const handleButton = (openVotePage) => {
         if (buttonList[button].click === "vote") return props.openVotePage(true)
@@ -155,16 +174,27 @@ function Tickets (props) {
 
     return(
         <div className={classes.ticlet}>
-            <Button
-                color={buttonList[button].color}
-                endIcon={buttonList[button].icon}
-                disabled={buttonList[button].disable}
-                size='large'
-                variant="contained"
-                onClick={handleButton}
-            >
-                {buttonList[button].text}
-            </Button>
+            {buttonLoaded
+                ?
+                <Button
+                    color={buttonList[button].color}
+                    endIcon={buttonList[button].icon}
+                    disabled={buttonList[button].disable}
+                    size='large'
+                    variant="contained"
+                    onClick={handleButton}
+                >
+                    {buttonList[button].text}
+                </Button>
+                :
+                <Button
+                    disabled
+                    size='large'
+                    variant="contained"
+                    onClick={handleButton}
+                >　</Button> 
+            }
+            
             <Card className={classes.ticletsBox}>
                 <Typography align="center" variant="body2">
                     枚数:{ticketNum}枚 (予選投票は2枚、決勝投票は3枚必要)

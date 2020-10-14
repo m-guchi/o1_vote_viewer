@@ -89,6 +89,7 @@ function Vote (props) {
             console.error(error)
         })
         await sleep(voteSleepTime*1000)
+        props.submitVote()
         props.closeVotePage(false)
     }
 
