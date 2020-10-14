@@ -10,7 +10,7 @@ function TicketsCount (props) {
         <Typography align="center">
             {
                 [0,1,2].map((val) => (
-                    <React.Fragment>
+                    <React.Fragment key={val}>
                         {val < props.count ? <ConfirmationNumberIcon /> : <ConfirmationNumberOutlinedIcon />}
                     </React.Fragment>
                 ))

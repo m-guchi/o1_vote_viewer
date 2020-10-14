@@ -74,6 +74,7 @@ function Tickets (props) {
     const [cookies] = useCookies(['user'])
 
     const [ticketNum, setTicketNum] = useState(props.ticketNum)
+    // const [ticketNum, setTicketNum] = useState(3)
 
     const needTicket = {
         first: 2,
@@ -101,6 +102,7 @@ function Tickets (props) {
     }
 
     const [button, setButton] = useState(buttonInitialStatus)
+    // const [button, setButton] = useState('availableVote')
 
     const handleGetTicket = () => {
         axios.post(process.env.REACT_APP_API_URL + 'post_ticket.php',{

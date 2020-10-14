@@ -3,6 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Card, Divider, Grid, Typography } from '@material-ui/core';
 import VoteIntroduction from './VoteIntroduction';
 import CloseIcon from '@material-ui/icons/Close';
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +49,10 @@ const useStyles = makeStyles((theme) => ({
 function Vote (props) {
     const classes = useStyles();
     const [voteItem, setVoteItem] = React.useState(null)
+    const [voteSubmit, setVoteSubmit] =React.useState(false)
+    const [cookies] = useCookies(['user'])
+    const voteSleepTime = 1.5 //投票後閉じるまでの時間
+
 
     const handleVoteItem = (event) => {
         setVoteItem(event)
@@ -53,6 +61,36 @@ function Vote (props) {
     const voteItemData = Object.values(props.group).filter(function(item, index) {
         if (item.id == voteItem) return true
     })
+
+
+    function sleep(time) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve();
+            }, time);
+        });
+    }
+
+    const submitVote = async () => {
+        await axios.post(process.env.REACT_APP_API_URL + 'post_vote.php', {
+            user_id: cookies.user_id,
+            group_id: voteItem,
+        })
+        .then(function (response) {
+            if (response.data.ok) {
+                setVoteSubmit('投票しました')
+            } else {
+                console.error(response.data.error)
+                if (response.data.error === "already_vote") setVoteSubmit('投票済です')
+                // props.closeVotePage(false)
+            }
+        })
+        .catch(function (error) {
+            console.error(error)
+        })
+        await sleep(voteSleepTime*1000)
+        props.closeVotePage(false)
+    }
 
     return(
         <React.Fragment>
@@ -91,6 +129,7 @@ function Vote (props) {
                 <Grid container className={classes.listBox} spacing={1}>
                     {Object.values(props.group).map((val) => (
                         <VoteIntroduction
+                            key={val.id}
                             class={false}
                             data={val}
                             checked={val.id===voteItem}
@@ -126,12 +165,17 @@ function Vote (props) {
                                 {voteItemData[0].name}
                             </Typography>
                             <div className={classes.submitBottun}>
-                                <Button
-                                    color='primary'
-                                    variant="contained"
-                                >
-                                    投票
-                                </Button>
+                                {
+                                    voteSubmit ? 
+                                    <div>{voteSubmit}</div> :
+                                    <Button
+                                        color='primary'
+                                        variant="contained"
+                                        onClick={() => submitVote()}
+                                    >
+                                        投票
+                                    </Button>
+                                }
                             </div>
                             <Typography
                                 variant="body2"
