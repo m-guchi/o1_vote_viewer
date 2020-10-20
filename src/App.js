@@ -1,25 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter } from 'react-router-dom';
+import { CookiesProvider, useCookies  } from 'react-cookie';
+// import logo from './logo.svg';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from "@material-ui/styles";
 import './App.css';
+import User from './viewer/User';
 
-function App() {
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#FF850C"
+    },
+    secondary: {
+      main: "#72d665"
+    }
+  }
+});
+
+function App() {  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
+      <CookiesProvider>
+        <ThemeProvider theme={theme}>
+            <User />
+        </ThemeProvider>
+      </CookiesProvider>
+    </BrowserRouter>
   );
 }
 
