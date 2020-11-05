@@ -55,7 +55,9 @@ function Title (props) {
             <div className={classes.title}>
                 <span className={classes.round}>{round[props.setting.round]}</span>
                 <div className={classes.entryName}>
-                    {Boolean(props.setting.vote) ? "投票受付中！" :
+                    {Boolean(props.setting.vote) ?
+                        Boolean(props.setting.vote_accept)?"投票受付中！":"投票集計中"
+                        :
                         groupData.length>0 &&
                         [
                             <span className={classes.entry}><span className={classes.entrySub}>No.</span>{groupData[0].no}</span>,
