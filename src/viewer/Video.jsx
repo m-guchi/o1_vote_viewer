@@ -17,11 +17,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Video () {
+function Video (props) {
     const classes = useStyles();
+    const link = "https://www.youtube.com/embed/"+props.youtube
     return(
         <div className={classes.box}>
-            <iframe className={classes.iframe} title="live" width="640" height="360" src="https://www.youtube.com/embed/xDMP3i36naA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe className={classes.iframe} title="live" width="640" height="360" src={link} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     )
 }

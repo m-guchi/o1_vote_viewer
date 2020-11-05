@@ -77,7 +77,7 @@ function Main(props) {
                 {
                     (Boolean(props.setting.running) && loaded) &&
                     [
-                        <Video />,
+                        <Video youtube={props.setting.youtube}/>,
                         <Title setting={props.setting} group={group}/>,
                         <Tickets
                             setting={props.setting}
