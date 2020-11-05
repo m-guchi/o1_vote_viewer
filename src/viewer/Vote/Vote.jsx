@@ -128,15 +128,27 @@ function Vote (props) {
                     </Typography>
                 </Card>
                 <Grid container className={classes.listBox} spacing={1}>
-                    {Object.values(props.group).map((val) => (
-                        <VoteIntroduction
-                            key={val.id}
-                            class={false}
-                            data={val}
-                            checked={val.id===voteItem}
-                            onVoteItem={handleVoteItem}
-                        />
-                    ))}
+                    {
+                        props.setting.round == "first" ?
+                        Object.values(props.group).map((val) => (
+                            <VoteIntroduction
+                                key={val.id}
+                                class={false}
+                                data={val}
+                                checked={val.id===voteItem}
+                                onVoteItem={handleVoteItem}
+                            />
+                        )):
+                        Object.values(props.group).filter((val) => { return val.final == 1 }).map((val) => (
+                            <VoteIntroduction
+                                key={val.id}
+                                class={false}
+                                data={val}
+                                checked={val.id === voteItem}
+                                onVoteItem={handleVoteItem}
+                            />
+                        ))
+                    }
                 </Grid>
                 <Typography align='center'>
                     <Button
