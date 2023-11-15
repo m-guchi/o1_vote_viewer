@@ -15,7 +15,8 @@ function MemberList(props) {
     return(
         <Grid container className={classes.root} spacing={1}>
             {
-                Object.values(props.group).map((val) => (
+                Object.values(props.group).map((val) => 
+                (
                     <MemberIntroduction
                         no={val.no}
                         name={val.name}

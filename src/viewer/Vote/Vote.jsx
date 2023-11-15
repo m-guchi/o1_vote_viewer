@@ -129,7 +129,7 @@ function Vote (props) {
                 </Card>
                 <Grid container className={classes.listBox} spacing={1}>
                     {
-                        props.setting.round == "first" ?
+                        props.setting.round == 1 ?
                         Object.values(props.group).map((val) => (
                             <VoteIntroduction
                                 key={val.id}

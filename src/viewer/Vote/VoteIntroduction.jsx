@@ -23,10 +23,6 @@ const useStyles = makeStyles((theme) => ({
 function VoteIntroduction(props) {
     const classes = useStyles();
 
-    // const handleVoteItem = (event, newItem) => {
-    //     // console.log(event)
-    //     return 
-    // }
     return (
         <Grid item xs={12} sm={6} className={classes.grid}>
             <Card

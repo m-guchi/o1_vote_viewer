@@ -78,10 +78,11 @@ function Tickets (props) {
     // const [ticketNum, setTicketNum] = useState(3)
 
     const needTicket = {
-        first: 2,
-        final: 3,
+        1: 2,
+        2: 3,
     }
 
+    console.log(ticketNum, )
     const buttonInitialStatus = () => {
         if (Boolean(props.setting.vote) ){
             if (Boolean(props.setting.vote_accept) ){
@@ -150,6 +151,8 @@ function Tickets (props) {
             user_id: cookies.user_id,
         })
         .then(function (response) {
+            console.log(response.data)
+            console.log(setting.vote)
             if (response.data.ok && response.data.already && setting.vote) {
                 setButton('alreadyVote')
             }

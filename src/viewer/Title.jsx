@@ -39,13 +39,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const round = {
-    first: '予選',
-    final: '決勝',
+    1: '予選',
+    2: '決勝',
 }
 
 function Title (props) {
     const classes = useStyles();
-
     const groupData = Object.values(props.group).filter(function (item, index) {
         if (item.id == props.setting.group_id) return true
     })
