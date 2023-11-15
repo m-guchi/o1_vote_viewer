@@ -1,7 +1,7 @@
 {
-  "name": "finale-vote",
+  "name": "o1-vote_viewer",
   "version": "0.1.0",
-  "homepage": "./",
+  "homepage": "/o1-vote/viewer/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
